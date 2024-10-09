@@ -40,7 +40,7 @@ const Signup = () => {
 		const { isSuccess } = register;
 
 		if (isSuccess) {
-			router.push("/auth/signin");
+			router.push("/sign-in");
 			setUserData(initialData);
 		}
 	}),
