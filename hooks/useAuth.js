@@ -36,6 +36,7 @@ export const useLogin = () => {
 		onSuccess: (data) => {
 			if (data.user) {
 				localStorage.setItem("user", JSON.stringify(data.user));
+				localStorage.setItem("token", JSON.stringify(data.token));
 			}
 			queryClient.setQueryData(["user"], data.user);
 		},
