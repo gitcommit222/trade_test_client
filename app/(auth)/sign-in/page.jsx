@@ -42,7 +42,8 @@ const SignIn = () => {
 	useEffect(() => {
 		if (login.isSuccess) {
 			toast.success(`Welcome, ${login?.data?.user?.name}`);
-			router.push("/");
+			if (login.data?.user?.role === "admin") router.push("/admin");
+			else router.push("/");
 		}
 	}, [login.isError, login.isSuccess]);
 

@@ -5,7 +5,9 @@ export default function MainLayout({ children }) {
 	return (
 		<main>
 			<AppBarComponent />
-			<Container maxWidth="xl">{children}</Container>
+			<div className="px-[80px]">
+				<Container maxWidth="2xl">{children}</Container>
+			</div>
 		</main>
 	);
 }

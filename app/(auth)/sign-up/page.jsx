@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 const initialData = {
 	fullName: "",
 	email: "",
+	username: "",
 	password: "",
 	confirmPassword: "",
 };
@@ -59,6 +60,12 @@ const Signup = () => {
 								type="text"
 								name="fullName"
 								placeholder="Full name"
+								onChange={handleChange}
+							/>
+							<Input
+								type="text"
+								name="username"
+								placeholder="Username"
 								onChange={handleChange}
 							/>
 							<Input

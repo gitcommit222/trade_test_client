@@ -12,9 +12,12 @@ const registerUser = async ({ userData }) => {
 };
 
 export const useRegisterUser = () => {
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: registerUser,
-		onSuccess: () => {},
+		onSuccess: () => {
+			queryClient.invalidateQueries(["users"]);
+		},
 	});
 };
 
