@@ -11,6 +11,20 @@ import { Avatar } from "@mui/material";
 
 export default function ButtonAppBar() {
 	const { data: session } = useSession();
+
+	const [user, setUser] = React.useState(
+		JSON.parse(localStorage.getItem("user"))
+	);
+
+	const handleLogout = () => {
+		if (user) {
+			localStorage.removeItem("user");
+		}
+
+		setUser("");
+		signOut();
+	};
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
@@ -18,16 +32,21 @@ export default function ButtonAppBar() {
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						Memories
 					</Typography>
-					{session ? (
+					{user || session ? (
 						<div className="flex items-center gap-4">
-							<Avatar alt={session.user.name} src={session.user.image}>
-								{session.user.name.charAt(0)}
+							<Avatar
+								alt={user ? user.name : session.user.name}
+								src={session?.user.image ? session.user.image : ""}
+							>
+								{user ? user.name.charAt(0) : session.user.name.charAt(0)}
 							</Avatar>
-							<Typography variant="h6">{session.user.name}</Typography>
+							<Typography variant="h6">
+								{user ? user.name : session.user.name}
+							</Typography>
 							<Button
 								variant="contained"
 								color="secondary"
-								onClick={() => signOut()}
+								onClick={handleLogout}
 							>
 								Logout
 							</Button>
