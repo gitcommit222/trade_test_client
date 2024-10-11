@@ -95,3 +95,31 @@ export const useDeletePost = () => {
 		},
 	});
 };
+
+const likePost = async (postId) => {
+	const token = JSON.parse(localStorage.getItem("token"));
+	const response = await fetch(
+		`http://localhost:5000/posts/${postId}/likePost`,
+		{
+			method: "PUT",
+			headers: {
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json",
+			},
+		}
+	);
+	return response.json();
+};
+
+export const useLikePost = () => {
+	const queryClient = useQueryClient();
+	return useMutation({
+		mutationFn: likePost,
+		onSuccess: () => {
+			queryClient.invalidateQueries(["posts"]);
+		},
+		onError: (error) => {
+			toast.error(`Error deleting posts: ${error.message}`);
+		},
+	});
+};

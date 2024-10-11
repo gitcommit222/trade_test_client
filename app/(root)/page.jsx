@@ -9,17 +9,17 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import PostForm from "@/components/PostForm";
-import { useDeletePost, useGetAllPosts } from "@/hooks/usePosts";
+import { useDeletePost, useGetAllPosts, useLikePost } from "@/hooks/usePosts";
 import { format } from "date-fns";
 import toast from "react-hot-toast";
 
 const Landing = () => {
-	const likes = [1, 2, 3, 4];
 	const [currentId, setCurrentId] = useState(0);
 	const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
 	const { data: allPosts, isLoading: isPostsLoading } = useGetAllPosts();
 	const deletePost = useDeletePost();
+	const likePost = useLikePost();
 
 	const handleDeletePost = async (postId) => {
 		await toast.promise(deletePost.mutateAsync(postId), {
@@ -28,13 +28,39 @@ const Landing = () => {
 			error: "Error deleting post.",
 		});
 	};
+
+	const Likes = ({ post }) => {
+		if (post?.likes?.length > 0) {
+			return post.likes.find((like) => like === user?.id) ? (
+				<>
+					<ThumbUpIcon fontSize="small" className="text-gray-500" />
+					&nbsp;
+					{post.likes.length > 2
+						? `You and ${post.likes.length - 1} others`
+						: `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+				</>
+			) : (
+				<>
+					<ThumbUpAltOutlinedIcon fontSize="small" className="text-blue-500" />
+					&nbsp;{post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
+				</>
+			);
+		}
+
+		return (
+			<>
+				<ThumbUpAltOutlinedIcon fontSize="small" />
+				&nbsp;Like
+			</>
+		);
+	};
 	return (
 		<section className="py-10 flex">
 			<div className="flex-1 flex gap-4 flex-wrap">
 				{allPosts &&
 					!isPostsLoading &&
-					allPosts.map((post) => (
-						<Card className="w-[300px] h-[440px] rounded-t-md" key={post?._id}>
+					allPosts?.map((post) => (
+						<Card className="w-[300px] h-[400px] rounded-t-md" key={post?._id}>
 							<div className="border w-full h-[60%] relative">
 								<Image
 									src={post?.selectedFile ? post.selectedFile : defaultImg}
@@ -85,30 +111,19 @@ const Landing = () => {
 									</p>
 								</div>
 								<div>
-									<p className="text-[12px] text-gray-500">
-										{`Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-								Obcaecati, cumque excepturi! `}
-									</p>
+									<p className="text-[12px] text-gray-500">{post?.message}</p>
 									<div className="flex items-center justify-between">
 										<p className="text-blue-500 text-[14px]">
 											{post.tags.map((tag) => `#${tag} `)}
 										</p>
-										<div>
-											<Button>
-												<ThumbUpIcon
-													fontSize="small"
-													className="text-blue-500"
-												/>
-												&nbsp;
-												<span className="text-[12px]">
-													{likes.length > 2
-														? `You & ${likes.length - 1} others`
-														: `${likes.length} like${
-																likes.length > 1 ? "s" : ""
-														  }`}
-												</span>
-											</Button>
-										</div>
+										<Button
+											size="small"
+											color="primary"
+											disabled={!user}
+											onClick={() => likePost.mutate(post._id)}
+										>
+											<Likes post={post} />
+										</Button>
 									</div>
 								</div>
 							</div>

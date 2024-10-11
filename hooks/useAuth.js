@@ -9,7 +9,7 @@ const registerUser = async ({ userData }) => {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify(userData),
-	}).then(handleResponse);
+	});
 	return response.json();
 };
 
@@ -26,13 +26,13 @@ export const useRegisterUser = () => {
 	});
 };
 
-const login = async ({ email, password }) => {
+const login = async ({ usernameOrEmail, password }) => {
 	const response = await fetch(`http://localhost:5000/users/signin`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({ email, password }),
+		body: JSON.stringify({ usernameOrEmail, password }),
 	});
 	return response.json();
 };

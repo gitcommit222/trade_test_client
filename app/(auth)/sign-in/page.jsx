@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const initialData = {
-	email: "",
+	usernameOrEmail: "",
 	password: "",
 };
 
@@ -30,7 +30,7 @@ const SignIn = () => {
 
 		try {
 			await login.mutateAsync({
-				email: userData.email,
+				usernameOrEmail: userData.usernameOrEmail,
 				password: userData.password,
 			});
 			setUserData(initialData);
@@ -57,9 +57,9 @@ const SignIn = () => {
 						</Typography>
 						<div className="flex flex-col px-[12px] gap-3">
 							<Input
-								type="email"
-								name="email"
-								placeholder="Email"
+								type="text"
+								name="usernameOrEmail"
+								placeholder="Username/Email"
 								onChange={handleChange}
 							/>
 							<Input

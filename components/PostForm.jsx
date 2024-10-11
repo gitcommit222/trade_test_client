@@ -129,7 +129,7 @@ const PostForm = ({ currentId, setCurrentId }) => {
 					size="large"
 					type="submit"
 					fullWidth
-					disabled={createPost.isPending}
+					disabled={createPost.isPending || updatePost.isPending}
 				>
 					{currentId ? "Update" : "Create"}
 				</Button>
@@ -138,6 +138,7 @@ const PostForm = ({ currentId, setCurrentId }) => {
 					color="secondary"
 					size="small"
 					onClick={clear}
+					disabled={createPost.isPending || updatePost.isPending}
 					fullWidth
 				>
 					Clear
