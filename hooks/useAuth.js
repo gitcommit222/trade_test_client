@@ -1,4 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { handleResponse } from "@/utils/api";
+import toast from "react-hot-toast";
 
 const registerUser = async ({ userData }) => {
 	const response = await fetch(`http://localhost:5000/users/signup`, {
@@ -7,7 +9,7 @@ const registerUser = async ({ userData }) => {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify(userData),
-	});
+	}).then(handleResponse);
 	return response.json();
 };
 
@@ -17,6 +19,9 @@ export const useRegisterUser = () => {
 		mutationFn: registerUser,
 		onSuccess: () => {
 			queryClient.invalidateQueries(["users"]);
+		},
+		onError: (error) => {
+			toast.error(`Error creating user: ${error.message}`);
 		},
 	});
 };
@@ -43,6 +48,9 @@ export const useLogin = () => {
 			}
 			queryClient.setQueryData(["user"], data.user);
 		},
+		onError: (error) => {
+			toast.error(`Error: ${error.message}`);
+		},
 	});
 };
 
@@ -60,6 +68,9 @@ const forgotPassword = async ({ email, newPassword }) => {
 export const useForgotPassword = () => {
 	return useMutation({
 		mutationFn: forgotPassword,
+		onError: (error) => {
+			toast.error(`Error: ${error.message}`);
+		},
 	});
 };
 

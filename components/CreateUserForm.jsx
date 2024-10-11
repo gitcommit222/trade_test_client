@@ -31,8 +31,6 @@ const CreateUserForm = ({ currentId, setCurrentId }) => {
 	const addUser = useRegisterUser();
 	const updateUser = useUpdateUser();
 
-	console.log(user);
-
 	useEffect(() => {
 		if (user) {
 			setUserData(user.user);

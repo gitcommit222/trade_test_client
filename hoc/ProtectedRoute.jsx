@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/components/loader/Loader";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -32,7 +33,7 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
 	}, [router, allowedRoles]);
 
 	if (!user) {
-		return <p>Loading...</p>;
+		return <Loader />;
 	}
 
 	return <>{user && allowedRoles.includes(user.role) && children}</>;

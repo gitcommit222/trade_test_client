@@ -1,4 +1,5 @@
 import AppBarComponent from "@/components/AppBar";
+import ProtectedRoute from "@/hoc/ProtectedRoute";
 import { Container } from "@mui/material";
 
 export default function MainLayout({ children }) {

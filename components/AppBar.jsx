@@ -18,10 +18,11 @@ export default function ButtonAppBar() {
 	const handleLogout = () => {
 		if (user) {
 			localStorage.removeItem("user");
+			localStorage.removeItem("token");
 		}
 
 		setUser("");
-		// signOut();
+		signOut();
 	};
 
 	return (

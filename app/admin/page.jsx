@@ -49,7 +49,6 @@ const AdminDashboard = () => {
 								<TableCell>Name</TableCell>
 								<TableCell>Username</TableCell>
 								<TableCell>Email</TableCell>
-								<TableCell>Posts</TableCell>
 								<TableCell>Role</TableCell>
 								<TableCell>Actions</TableCell>
 							</TableRow>
@@ -66,7 +65,6 @@ const AdminDashboard = () => {
 										<TableCell>{user?.name}</TableCell>
 										<TableCell>{user?.username || "--"}</TableCell>
 										<TableCell>{user?.email}</TableCell>
-										<TableCell>4</TableCell>
 										<TableCell className="capitalize">{user?.role}</TableCell>
 										<TableCell className="flex items-center justify-center gap-2">
 											<Button onClick={() => setCurrentId(user?._id)}>
